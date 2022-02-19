@@ -22,7 +22,7 @@ namespace EntityLayer.Concrete
         [StringLength(20)]
         public string WriterPassword { get; set; }
 
-        //asd
+
         public ICollection<Heading> Headings { get; set; }
         public ICollection<Content> Contents { get; set; }
     }
