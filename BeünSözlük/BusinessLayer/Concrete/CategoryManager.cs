@@ -19,14 +19,14 @@ namespace BusinessLayer.Concrete
 
         public void CategoryAdd(Category category)
         {
-            if (category.CategoryName == "" || category.CategoryName.Length <= 3 || category.CategoryDescription == "" || category.CategoryName.Length >= 51)
-            {
-                //hata mesajı
-            }
-            else
-            {
+            //if (category.CategoryName == "" || category.CategoryName.Length <= 3 || category.CategoryDescription == "" || category.CategoryName.Length >= 51)
+            //{
+            //    //hata mesajı
+            //}
+            //else
+            //{
                 repository.Add(category);   
-            }
+            //}
         }
     }
 }

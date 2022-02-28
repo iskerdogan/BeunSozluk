@@ -174,7 +174,8 @@
     <Content Include="Views\Shared\_Deneme.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
-    <Content Include="Views\Category\GetCategoyList.cshtml" />
+    <Content Include="Views\Category\GetCategoryList.cshtml" />
+    <Content Include="Views\Category\AddCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

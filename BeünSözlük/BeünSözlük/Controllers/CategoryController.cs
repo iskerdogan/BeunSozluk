@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Concrete;
+using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,23 @@ namespace BeünSözlük.Controllers
         {
             return View();
         }
-        public ActionResult GetCategoyList()
+        public ActionResult GetCategoryList()
         {
             var categoryValues = categoryManager.GetAll();
             return View(categoryValues);
+        }
+
+        [HttpGet]
+        public ActionResult AddCategory()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddCategory(Category category)
+        {
+            categoryManager.CategoryAdd(category);
+            return RedirectToAction("GetCategoryList");
         }
     }
 }
