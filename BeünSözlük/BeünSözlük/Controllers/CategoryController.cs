@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Concrete;
+using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,15 @@ namespace BeünSözlük.Controllers
     public class CategoryController : Controller
     {
         // GET: Category
-        CategoryManager categoryManager = new CategoryManager();
+        CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
         public ActionResult Index()
         {
             return View();
         }
         public ActionResult GetCategoryList()
         {
-            //var categoryValues = categoryManager.GetAll();
-            return View();
+            var categoryValues = categoryManager.GetList();
+            return View(categoryValues);
         }
 
         [HttpGet]
