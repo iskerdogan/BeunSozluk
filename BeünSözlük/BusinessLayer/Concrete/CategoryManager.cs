@@ -24,10 +24,10 @@ namespace BusinessLayer.Concrete
             return _categoryDal.List();
         }
 
-        public void CategoryAddBussinesLayer()
+        public void AddCategoryBusinessLayer(Category category)
         {
+            _categoryDal.Add(category);
 
         }
-
     }
 }
