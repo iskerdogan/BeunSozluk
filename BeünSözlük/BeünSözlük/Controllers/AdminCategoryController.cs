@@ -48,7 +48,7 @@ namespace BeünSözlük.Controllers
 
         public ActionResult DeleteCategory(int id)
         {
-            var categoryValue= categoryManager.GetById(id);
+            var categoryValue= categoryManager.GetCategoryById(id);
             categoryManager.CategoryDelete(categoryValue);
             return RedirectToAction("Index"); 
         }
@@ -56,7 +56,7 @@ namespace BeünSözlük.Controllers
         [HttpGet]
         public ActionResult EditCategory(int id)
         {
-            var categoryValue = categoryManager.GetById(id);
+            var categoryValue = categoryManager.GetCategoryById(id);
             return View(categoryValue); 
         }
         
