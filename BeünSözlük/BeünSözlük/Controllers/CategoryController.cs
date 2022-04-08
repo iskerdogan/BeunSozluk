@@ -18,8 +18,8 @@ namespace BeünSözlük.Controllers
         }
         public ActionResult GetCategoryList()
         {
-            var categoryValues = categoryManager.GetAll();
-            return View(categoryValues);
+            //var categoryValues = categoryManager.GetAll();
+            return View();
         }
 
         [HttpGet]
@@ -31,7 +31,7 @@ namespace BeünSözlük.Controllers
         [HttpPost]
         public ActionResult AddCategory(Category category)
         {
-            categoryManager.CategoryAdd(category);
+            //categoryManager.CategoryAdd(category);
             return RedirectToAction("GetCategoryList");
         }
     }
