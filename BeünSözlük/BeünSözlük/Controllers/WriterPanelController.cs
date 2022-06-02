@@ -9,19 +9,24 @@ using System.Web.Mvc;
 
 namespace BeünSözlük.Controllers
 {
-    public class HeadingController : Controller
+    public class WriterPanelController : Controller
     {
         HeadingManager headingManager = new HeadingManager(new EfHeadingDal());
         CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
-        WriterManager writerManager = new WriterManager(new EfWriterDal());
-        public ActionResult Index()
+        // GET: WriterPanel
+        public ActionResult WriterProfile()
         {
-            var headingValues = headingManager.GetList();
-            return View(headingValues);
+            return View();
+        }
+
+        public ActionResult MyHeading()
+        {
+            var values = headingManager.GetListByWriter();
+            return View(values);
         }
 
         [HttpGet]
-        public ActionResult AddHeading()
+        public ActionResult NewHeading()
         {
             List<SelectListItem> valueCategory = (from x in categoryManager.GetList()
                                                   select new SelectListItem
@@ -29,24 +34,18 @@ namespace BeünSözlük.Controllers
                                                       Text = x.CategoryName,
                                                       Value = x.CategoryId.ToString()
                                                   }).ToList();
-
-            List<SelectListItem> valueWriter = (from x in writerManager.GetList()
-                                                select new SelectListItem
-                                                {
-                                                    Text = x.WriterName + " " + x.WriterSurname,
-                                                    Value = x.WriterId.ToString()
-                                                }).ToList();
             ViewBag.valueCategory = valueCategory;
-            ViewBag.valueWriter = valueWriter;
             return View();
         }
 
         [HttpPost]
-        public ActionResult AddHeading(Heading heading)
+        public ActionResult NewHeading(Heading heading)
         {
             heading.HeadingDate = DateTime.Parse(DateTime.Now.ToShortDateString());
+            heading.WriterId = 4;
+            heading.HeadingStatus = true;
             headingManager.AddHeadingBusinessLayer(heading);
-            return RedirectToAction("Index");
+            return RedirectToAction("MyHeading");
         }
 
         [HttpGet]
@@ -60,7 +59,7 @@ namespace BeünSözlük.Controllers
                                                   }).ToList();
             ViewBag.valueCategory = valueCategory;
 
-            var headingValues=headingManager.GetHeadingById(id);
+            var headingValues = headingManager.GetHeadingById(id);
             return View(headingValues);
         }
 
@@ -68,17 +67,15 @@ namespace BeünSözlük.Controllers
         public ActionResult EditHeading(Heading heading)
         {
             headingManager.HeadingUpdate(heading);
-            return RedirectToAction("Index");
+            return RedirectToAction("MyHeading");
         }
-
 
         public ActionResult DeleteHeading(int id)
         {
-            var headingValue=headingManager.GetHeadingById(id);
+            var headingValue = headingManager.GetHeadingById(id);
             headingValue.HeadingStatus = headingValue.HeadingStatus ? false : true;
             headingManager.HeadingDelete(headingValue);
-            return RedirectToAction("Index");
+            return RedirectToAction("MyHeading");
         }
-
     }
 }

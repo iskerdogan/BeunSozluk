@@ -25,12 +25,17 @@ namespace BusinessLayer.Concrete
 
         public Heading GetHeadingById(int id)
         {
-            return _headingDal.Get(x=>x.HeadingId==id);
+            return _headingDal.Get(x => x.HeadingId == id);
         }
 
         public List<Heading> GetList()
         {
             return _headingDal.List();
+        }
+
+        public List<Heading> GetListByWriter()
+        {
+            return _headingDal.List(x => x.WriterId == 4);
         }
 
         public void HeadingDelete(Heading heading)
