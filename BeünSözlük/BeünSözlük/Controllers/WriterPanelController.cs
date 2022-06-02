@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Concrete;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using System;
@@ -13,15 +14,19 @@ namespace BeünSözlük.Controllers
     {
         HeadingManager headingManager = new HeadingManager(new EfHeadingDal());
         CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
+        Context context = new Context();
         // GET: WriterPanel
+
         public ActionResult WriterProfile()
         {
             return View();
         }
 
-        public ActionResult MyHeading()
+        public ActionResult MyHeading(string writerMail)
         {
-            var values = headingManager.GetListByWriter();
+            writerMail = (string)Session["WriterMail"];
+            var writerId = context.Writers.Where(x => x.WriterMail == writerMail).Select(x => x.WriterId).FirstOrDefault();
+            var values = headingManager.GetListByWriter(writerId);
             return View(values);
         }
 
@@ -41,8 +46,10 @@ namespace BeünSözlük.Controllers
         [HttpPost]
         public ActionResult NewHeading(Heading heading)
         {
+            string writerMail = (string)Session["WriterMail"];
+            var writerId = context.Writers.Where(x => x.WriterMail == writerMail).Select(x => x.WriterId).FirstOrDefault();
             heading.HeadingDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-            heading.WriterId = 4;
+            heading.WriterId = writerId;
             heading.HeadingStatus = true;
             headingManager.AddHeadingBusinessLayer(heading);
             return RedirectToAction("MyHeading");

@@ -9,6 +9,7 @@ using System.Web.Security;
 
 namespace BeünSözlük.Controllers
 {
+    [AllowAnonymous]
     public class LoginController : Controller
     {
         // GET: Login
@@ -32,6 +33,29 @@ namespace BeünSözlük.Controllers
             else
             {
                 return RedirectToAction("Index");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult WriterLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult WriterLogin(Writer writer)
+        {
+            Context context = new Context();
+            var writerUserInfo = context.Writers.FirstOrDefault(x => x.WriterMail == writer.WriterMail && x.WriterPassword == writer.WriterPassword);
+            if (writerUserInfo != null)
+            {
+                FormsAuthentication.SetAuthCookie(writerUserInfo.WriterMail, false);
+                Session["WriterMail"] = writerUserInfo.WriterMail;
+                return RedirectToAction("WriterProfile", "WriterPanel");
+            }
+            else
+            {
+                return RedirectToAction("WriterLogin");
             }
         }
     }
