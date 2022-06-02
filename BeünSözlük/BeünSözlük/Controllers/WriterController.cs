@@ -15,6 +15,8 @@ namespace BeünSözlük.Controllers
     {
         WriterManager writerManager = new WriterManager(new EfWriterDal());
         WriterValidator validationRules = new WriterValidator();
+
+        [Authorize]
         public ActionResult Index()
         {
             var writerValues=writerManager.GetList();
