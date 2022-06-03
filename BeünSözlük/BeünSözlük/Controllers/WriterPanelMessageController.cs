@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -18,7 +19,8 @@ namespace BeünSözlük.Controllers
         // GET: WriterPanelMessage
         public ActionResult Inbox()
         {
-            var messageList = messageManager.GetListInbox();
+            string writerMail = (string)Session["WriterMail"];
+            var messageList = messageManager.GetListInbox(writerMail);
             return View(messageList);
         }
 
@@ -30,7 +32,8 @@ namespace BeünSözlük.Controllers
 
         public ActionResult Sendbox()
         {
-            var messageList = messageManager.GetListSendbox();
+            string writerMail = (string)Session["WriterMail"];
+            var messageList = messageManager.GetListSendbox(writerMail);
             return View(messageList);
         }
 
@@ -49,10 +52,11 @@ namespace BeünSözlük.Controllers
         [HttpPost]
         public ActionResult NewMessage(Message message)
         {
+            string senderMail = (string)Session["WriterMail"];
             ValidationResult validationResult = validationRules.Validate(message);
             if (validationResult.IsValid)
             {
-                message.SenderMail = "enesyslyrt@gmail.com";
+                message.SenderMail = senderMail;
                 message.MessageDate = DateTime.Parse(DateTime.Now.ToShortDateString());
                 messageManager.AddMessageBusinessLayer(message);
                 return RedirectToAction("Sendbox");

@@ -18,15 +18,15 @@ namespace BeünSözlük.Controllers
         MessageValidator validationRules = new MessageValidator();
 
         [Authorize]
-        public ActionResult Inbox()
+        public ActionResult Inbox(string mail)
         {
-            var messageList = messageManager.GetListInbox();
+            var messageList = messageManager.GetListInbox(mail);
             return View(messageList);
         }
 
-        public ActionResult Sendbox()
+        public ActionResult Sendbox(string mail)
         {
-            var messageList = messageManager.GetListSendbox();
+            var messageList = messageManager.GetListSendbox(mail);
             return View(messageList);
         }
 
