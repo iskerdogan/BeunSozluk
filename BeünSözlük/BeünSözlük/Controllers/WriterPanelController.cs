@@ -20,6 +20,7 @@ namespace BeünSözlük.Controllers
         CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
         WriterManager writerManager = new WriterManager(new EfWriterDal());
         WriterValidator validationRules = new WriterValidator();
+        ContentManager contentManager = new ContentManager(new EfContentDal());
         Context context = new Context();
         // GET: WriterPanel
 
@@ -51,13 +52,18 @@ namespace BeünSözlük.Controllers
             return View();
         }
 
-        public ActionResult MyHeading(string writerMail)
+        public ActionResult MyHeading(string search, string writerMail, int page = 1)
         {
             writerMail = (string)Session["WriterMail"];
             var writerId = context.Writers.Where(x => x.WriterMail == writerMail).Select(x => x.WriterId).FirstOrDefault();
-            var values = headingManager.GetListByWriter(writerId);
+            var values = !string.IsNullOrEmpty(search) ? headingManager.GetListByWriterAndSearch(writerId,search).OrderByDescending(x => x.HeadingId).Where(x => x.HeadingStatus == true).ToPagedList(page, 7): headingManager.GetListByWriter(writerId).OrderByDescending(x => x.HeadingId).Where(x => x.HeadingStatus == true).ToPagedList(page, 7);
             return View(values);
         }
+        public ActionResult ContentByHeading(int id)
+        {
+            var contentValues = contentManager.GetListByHeadingId(id);
+            return View(contentValues);
+        } 
 
         [HttpGet]
         public ActionResult NewHeading()
@@ -114,10 +120,10 @@ namespace BeünSözlük.Controllers
             return RedirectToAction("MyHeading");
         }
 
-        public ActionResult AllHeading(int page = 1)
+        public ActionResult AllHeading(string search, int page = 1)
         {
-            var headings = headingManager.GetList().ToPagedList(page, 4);
-            return View(headings);
+            var headingValues = !string.IsNullOrEmpty(search) ? headingManager.GetListBySearch(search).OrderByDescending(x => x.HeadingId).Where(x=>x.HeadingStatus == true).ToPagedList(page, 7) : headingManager.GetList().OrderByDescending(x => x.HeadingId).Where(x => x.HeadingStatus == true).ToPagedList(page, 7);
+            return View(headingValues);
         }
     }
 }

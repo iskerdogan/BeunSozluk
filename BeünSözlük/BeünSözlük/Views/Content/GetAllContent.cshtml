@@ -1,0 +1,70 @@
+﻿@using EntityLayer.Concrete
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Content>
+@{
+    ViewBag.Title = "GetAllContent";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<body class="hold-transition sidebar-mini">
+    <br />
+    @using (Html.BeginForm("GetAllContent", "Content", FormMethod.Post))
+    {
+        <form class="form-inline">
+            <div class="input-group ">
+                @Html.TextBox("search")
+                @*<input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">*@
+                <div class="input-group-append" style="padding-left:1px">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    }
+    <br />
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <section class="content">
+            <div class="container-fluid">
+
+                <!-- Timelime example  -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- The time line -->
+                        <div class="timeline">
+                            <!-- timeline time label -->
+                            @foreach (var item in Model)
+                            {
+                                <div class="time-label">
+                                    <span class="bg-success">@(((DateTime)item.ContentDate).ToString("dd-MMM-yyyy")) - @item.Writer.WriterName @item.Writer.WriterSurname</span>
+                                </div>
+                                <!-- /.timeline-label -->
+                                <!-- timeline item -->
+                                <div>
+                                    <i class="fas fa-comment bg-yellow"></i>
+                                    <div class="timeline-item">
+                                        <h3 class="timeline-header"><a href="/Content/ContentByHeading/@item.HeadingId">@item.Heading.HeadingName</a></h3>
+                                        <div class="timeline-body">
+                                            @item.ContentValue
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END timeline item -->
+                            }
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </div>
+            <!-- /.timeline -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- ./wrapper -->
+</body>
+</html>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("GetAllContent", new { page }), new PagedListRenderOptions { LiElementClasses = new List<string> { "page-link" } })
+

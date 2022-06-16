@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +15,23 @@ namespace BeünSözlük.Controllers
         HeadingManager headingManager = new HeadingManager(new EfHeadingDal());
         ContentManager contentManager = new ContentManager(new EfContentDal());
         // GET: Default
-        public ActionResult Headings()
+        public ActionResult Headings(string search)
         {
-            var headingList = headingManager.GetList();
+            var headingList = !string.IsNullOrEmpty(search) ? headingManager.GetListBySearch(search).Where(x => x.HeadingStatus == true).ToList() : headingManager.GetList().Where(x => x.HeadingStatus == true).ToList();
             return View(headingList);
         }
 
-        public PartialViewResult Index(int id=0)
+        public PartialViewResult Index(int id = 0,int page = 1)
         {
-            var contentLis= contentManager.GetListByHeadingId(id);
+            var contentLis = contentManager.GetListByHeadingId(id).ToPagedList(page, 4);
             return PartialView(contentLis);
         }
+
+        public ActionResult GetAllContent(string search)
+        {
+            var values = !string.IsNullOrEmpty(search) ? contentManager.GetListBySearch(search) : contentManager.GetList();
+            return View(values);
+        }
+
     }
 }

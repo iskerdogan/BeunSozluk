@@ -20,13 +20,13 @@ namespace BeünSözlük.Controllers
         [Authorize]
         public ActionResult Inbox(string mail)
         {
-            var messageList = messageManager.GetListInbox(mail);
+            var messageList = messageManager.GetListInbox(mail).OrderByDescending(x => x.MessageId).ToList();
             return View(messageList);
         }
 
         public ActionResult Sendbox(string mail)
         {
-            var messageList = messageManager.GetListSendbox(mail);
+            var messageList = messageManager.GetListSendbox(mail).OrderByDescending(x => x.MessageId).ToList();
             return View(messageList);
         }
 

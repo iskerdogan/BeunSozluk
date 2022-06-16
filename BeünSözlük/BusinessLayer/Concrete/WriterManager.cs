@@ -23,6 +23,11 @@ namespace BusinessLayer.Concrete
             return _writerDal.List();
         }
 
+        public List<Writer> GetListBySearch(string search)
+        {
+           return _writerDal.List(x => x.WriterName.Contains(search));
+        }
+
         public Writer GetWriterById(int id)
         {
             return _writerDal.Get(x=>x.WriterId == id);

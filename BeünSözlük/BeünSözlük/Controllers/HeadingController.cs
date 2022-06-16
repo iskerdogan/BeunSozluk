@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,9 @@ namespace BeünSözlük.Controllers
         HeadingManager headingManager = new HeadingManager(new EfHeadingDal());
         CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
         WriterManager writerManager = new WriterManager(new EfWriterDal());
-        public ActionResult Index()
+        public ActionResult Index(string search,int page = 1)
         {
-            var headingValues = headingManager.GetList();
+            var headingValues = !string.IsNullOrEmpty(search) ? headingManager.GetListBySearch(search).OrderByDescending(x => x.HeadingId).ToPagedList(page, 9) : headingManager.GetList().OrderByDescending(x => x.HeadingId).ToPagedList(page, 9);
             return View(headingValues);
         }
 

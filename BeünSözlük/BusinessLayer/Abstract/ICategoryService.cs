@@ -10,6 +10,7 @@ namespace BusinessLayer.Abstract
     public interface ICategoryService
     {
         List<Category> GetList();
+        List<Category> GetListBySearch(string search);
         void AddCategoryBusinessLayer(Category category);  
         Category GetCategoryById(int id);
         void CategoryDelete(Category category);

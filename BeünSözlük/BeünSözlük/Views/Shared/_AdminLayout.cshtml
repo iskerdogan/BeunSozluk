@@ -9,8 +9,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-
-    <title>AdminLTE 3 | Dashboard 3</title>
+    <link rel="shortcut icon" type="image/png" href="~/Image/emoji.png" />
+    <title>ZBEÜ Sözlük Admin Paneli</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/fontawesome-free/css/all.min.css">
@@ -39,42 +39,78 @@ to get the desired effect
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
-                <img src="~/AdminLTE-3.0.4/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                     style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+            <a href="/Default/Headings/" class="brand-link">
+                <img src="~/Image/emoji.png" alt="ZBEÜ Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">ZBEÜ Sözlük</span>
             </a>
 
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="~/AdminLTE-3.0.4/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
-                    </div>
+                <div class="user-panel mt-3 pb-3 mb-3">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item has-treeview ">
+                            <a href="#" class="nav-link">
+                                <img src="@Session["AdminImage"].ToString()" class="brand-image img-circle elevation-3" style="height: 60px; width: 60px;" />
+                                <p style="padding-left:15px">
+                                    @Session["AdminName"].ToString() @Session["AdminSurname"].ToString()
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/Profile/AdminProfile/" class="nav-link">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            Profilimi Düzenle
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item has-treeview">
+                                    <a href="/Contact/Index" class="nav-link">
+                                        <i class="nav-icon fas fa-edit"></i>
+                                        <p>
+                                            İletişim & Mesajlar
+                                        </p>
+                                    </a>
+                                </li>
+                                @if (User.IsInRole("A"))
+                                {
+                                    <li class="nav-item">
+                                        <a href="/Authorization/Index/" class="nav-link">
+                                            <i class="nav-icon fas fa-user"></i>
+                                            <p>
+                                                Yetkilendirme
+                                            </p>
+                                        </a>
+                                    </li>
+                                }
+                                <li class="nav-item has-treeview">
+                                    <a href="/Login/LogOut/" class="nav-link">
+                                        <i class="nav-icon fas fa-door-closed"></i>
+                                        <p>
+                                            Çıkış Yap
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                             with font-awesome or any other icon font library -->
-                        @if (User.IsInRole("A"))
-                        {
-
-                            <li class="nav-item has-treeview">
-                                <a href="/AdminCategory/Index/" class="nav-link">
-                                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                                    <p>
-                                        Kategoriler
-                                    </p>
-                                </a>
-
-                            </li>
-                        }
+                        with font-awesome or any other icon font library -->
+                        <li class="nav-item has-treeview">
+                            <a href="/AdminCategory/Index/" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Kategoriler
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="/Heading/Index/" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
@@ -83,96 +119,24 @@ to get the desired effect
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/Content/GetAllContent/" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Yazılar
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item has-treeview">
                             <a href="/Writer/Index/" class="nav-link">
-                                <i class="nav-icon fas fa-copy"></i>
+                                <i class="nav-icon fas fa-pencil-alt"></i>
                                 <p>
                                     Yazarlar
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
-                                    Grafikler
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="~/AdminLTE-3.0.4/pages/charts/chartjs.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Pie Chart</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="~/AdminLTE-3.0.4/pages/charts/flot.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Column Chart</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="~/AdminLTE-3.0.4/pages/charts/inline.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Line Chart</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="/About/Index" class="nav-link">
-                                <i class="nav-icon fas fa-tree"></i>
-                                <p>
-                                    Hakkımızda
-                                </p>
-                            </a>
-
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="/Contact/Index" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>
-                                    İletişim & Mesajlar
-                                </p>
-                            </a>
-
-                        </li>
-                        <li class="nav-item">
-                            <a href="~/AdminLTE-3.0.4/pages/calendar.html" class="nav-link">
-                                <i class="nav-icon fas fa-calendar-alt"></i>
-                                <p>
-                                    Yetkilendirmeler
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="/ErrorPage/Page404" class="nav-link">
-                                <i class="nav-icon far fa-envelope"></i>
-                                <p>
-                                    Hata Sayfaları
-                                </p>
-                            </a>
-
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="/Default/Headings/" class="nav-link">
-                                <i class="nav-icon fas fa-book"></i>
-                                <p>
-                                    Siteye Dön
-
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="/Login/LogOut/" class="nav-link">
-                                <i class="nav-icon fas fa-door-closed"></i>
-                                <p>
-                                    Çıkış Yap
-                                </p>
-                            </a>
-
-                        </li>
+                        
+                        
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

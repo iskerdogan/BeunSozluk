@@ -1,5 +1,7 @@
 ﻿@using EntityLayer.Concrete
-@model List<Content>
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Content>
 
 <!DOCTYPE html>
 <html>
@@ -18,7 +20,6 @@
                             <!-- timeline time label -->
                             @foreach (var item in Model)
                             {
-                                <p>@item.Heading.HeadingName</p>
                                 <div class="time-label">
                                     <span class="bg-success">@(((DateTime)item.ContentDate).ToString("dd-MMM-yyyy")) - @item.Writer.WriterName @item.Writer.WriterSurname</span>
                                 </div>
@@ -47,6 +48,7 @@
     <!-- ./wrapper -->
 </body>
 </html>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index","Default", new { page }), new PagedListRenderOptions { LiElementClasses = new List<string> { "page-link" } })
 
 
 

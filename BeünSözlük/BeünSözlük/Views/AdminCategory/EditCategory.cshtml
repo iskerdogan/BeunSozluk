@@ -9,7 +9,7 @@
 {
     <div class="form-group">
         @Html.Label("Kategori Id")
-        @Html.TextBoxFor(x => x.CategoryId, new { @class = "form-control" })
+        @Html.TextBoxFor(x => x.CategoryId, new { @class = "form-control", @readonly = "readonly" })
         @Html.ValidationMessageFor(x => x.CategoryId)
         <br />
         @Html.Label("Kategori Adı")
@@ -19,10 +19,6 @@
         @Html.Label("Kategori Açıklaması")
         @Html.TextAreaFor(x => x.CategoryDescription, new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.CategoryDescription)
-        @*<br />
-        @Html.Label("Kategori Açıklaması")
-        @Html.TextAreaFor(x => x.CategoryDescription, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.CategoryDescription)*@
         <br />
         <button class="btn btn-success">Güncelle</button>
 

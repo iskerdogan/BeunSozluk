@@ -1,5 +1,8 @@
 ﻿@using EntityLayer.Concrete
-@model List<Heading>
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Heading>
+
 @{
     ViewBag.Title = "MyHeading";
     Layout = "~/Views/Shared/_WriterLayout.cshtml";
@@ -17,7 +20,20 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Başlıklar</h3>
+                @using (Html.BeginForm("MyHeading", "WriterPanel", FormMethod.Post))
+                {
+                    <form class="form-inline">
+                        <div class="input-group ">
+                            @Html.TextBox("search")
+                            @*<input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">*@
+                            <div class="input-group-append" style="padding-left:1px">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                }
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                         <i class="fas fa-minus"></i>
@@ -84,7 +100,7 @@
                                     <span class="@color">@item.Category.CategoryName</span>
                                 </td>
                                 <td class="project-actions text-right">
-                                    <a class="btn btn-primary btn-sm" href="/Content/ContentByHeading/@item.HeadingId">
+                                    <a class="btn btn-primary btn-sm" href="/WriterPanelContent/AddContent/@item.HeadingId">
                                         <i class="fas fa-folder">
                                         </i>
                                         İçerik
@@ -111,6 +127,7 @@
     </section>
 </body>
 </html>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("MyHeading", new { page }), new PagedListRenderOptions { LiElementClasses = new List<string> { "page-link" } })
 <a href="/WriterPanel/NewHeading/" class="btn btn-info">Başlık Ekle</a>
 
 

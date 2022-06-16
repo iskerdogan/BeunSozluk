@@ -8,10 +8,7 @@
 @using (Html.BeginForm("EditHeading", "Heading", FormMethod.Post))
 {
     <div class="form-group">
-        @Html.Label("Başlık Id")
-        @Html.TextBoxFor(x => x.HeadingId, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.HeadingId)
-        <br />
+        @Html.HiddenFor(x => x.HeadingId)
         @Html.Label("Başlık Adı")
         @Html.TextBoxFor(x => x.HeadingName, new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.HeadingName)
@@ -21,11 +18,11 @@
         @Html.ValidationMessageFor(x => x.HeadingId)
         <br />
         @Html.Label("Başlık Tarihi")
-        @Html.TextBoxFor(x => x.HeadingDate, new { @class = "form-control" })
+        @Html.TextBoxFor(x => x.HeadingDate, new { @class = "form-control", @readonly = "readonly" })
         @Html.ValidationMessageFor(x => x.HeadingDate)
         <br />
-        @Html.Label("Yazare Id")
-        @Html.TextBoxFor(x => x.WriterId, new { @class = "form-control" })
+        @Html.Label("Yazar Id")
+        @Html.TextBoxFor(x => x.WriterId, new { @class = "form-control",@readonly = "readonly"})
         @Html.ValidationMessageFor(x => x.WriterId)
         <br />
         <button class="btn btn-success">Güncelle</button>

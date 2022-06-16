@@ -20,7 +20,7 @@ namespace BeünSözlük.Controllers
         public ActionResult Inbox()
         {
             string writerMail = (string)Session["WriterMail"];
-            var messageList = messageManager.GetListInbox(writerMail);
+            var messageList = messageManager.GetListInbox(writerMail).OrderByDescending(x => x.MessageDate).ToList();
             return View(messageList);
         }
 
@@ -33,7 +33,7 @@ namespace BeünSözlük.Controllers
         public ActionResult Sendbox()
         {
             string writerMail = (string)Session["WriterMail"];
-            var messageList = messageManager.GetListSendbox(writerMail);
+            var messageList = messageManager.GetListSendbox(writerMail).OrderByDescending(x => x.MessageDate).ToList();
             return View(messageList);
         }
 

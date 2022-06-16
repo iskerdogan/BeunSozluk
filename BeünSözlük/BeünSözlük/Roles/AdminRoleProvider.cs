@@ -9,6 +9,12 @@ namespace BeünSözlük.Roles
 {
     public class AdminRoleProvider : RoleProvider
     {
+        public override string[] GetRolesForUser(string username)
+        {
+            Context context = new Context();
+            var result = context.Admins.FirstOrDefault(x=>x.AdminUserName == username);
+            return new string[] { result.AdminRole };
+        }
         public override string ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
@@ -36,12 +42,6 @@ namespace BeünSözlük.Roles
             throw new NotImplementedException();
         }
 
-        public override string[] GetRolesForUser(string username)
-        {
-            Context context = new Context();
-            var result = context.Admins.FirstOrDefault(x=>x.AdminUserName == username);
-            return new string[] { result.AdminRole };
-        }
 
         public override string[] GetUsersInRole(string roleName)
         {

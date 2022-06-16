@@ -37,12 +37,17 @@ namespace BusinessLayer.Concrete
 
         public void CategoryDelete(Category category)
         {
-            _categoryDal.Delete(category);
+            _categoryDal.Update(category);
         }
 
         public void CategoryUpdate(Category category)
         {
             _categoryDal.Update(category);
+        }
+
+        public List<Category> GetListBySearch(string search)
+        {
+            return _categoryDal.List(x => x.CategoryName.Contains(search));
         }
     }
 }

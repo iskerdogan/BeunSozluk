@@ -1,5 +1,7 @@
 ﻿@using EntityLayer.Concrete
-@model List<Heading>
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Heading>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -21,7 +23,22 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Başlıklar</h3>
+                @using (Html.BeginForm("Index", "Heading", FormMethod.Post))
+                {
+                    <div style="margin-left: auto; margin-right: auto;">
+                        <form class="form-inline">
+                            <div class="input-group ">
+                                @Html.TextBox("search")
+                                @*<input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">*@
+                                <div class="input-group-append" style="padding-left:1px">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                }
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                         <i class="fas fa-minus"></i>
@@ -147,6 +164,7 @@
     </section>
 </body>
 </html>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions { LiElementClasses = new List<string> { "page-link" } })
 <a href="/Heading/AddHeading/" class="btn btn-info">Başlık Ekle</a>
 
 

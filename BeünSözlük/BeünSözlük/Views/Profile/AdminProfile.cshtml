@@ -1,0 +1,35 @@
+﻿@model EntityLayer.Concrete.Admin
+@{
+    ViewBag.Title = "AdminProfile";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h2>Profil Düzenle</h2>
+@using (Html.BeginForm("AdminProfile", "Profile", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.AdminRole)
+        @Html.Label("Admin Adı")
+        @Html.TextBoxFor(x => x.AdminName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.AdminName)
+        <br />
+        @Html.Label("Admin Soyadı")
+        @Html.TextBoxFor(x => x.AdminSurname, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.AdminSurname)
+        <br />
+        @Html.Label("Admin Mail")
+        @Html.TextBoxFor(x => x.AdminUserName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.AdminUserName)
+        <br />
+        @Html.Label("Admin Şifresi")
+        @Html.TextBoxFor(x => x.AdminPassword, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.AdminPassword)
+        <br />
+        @Html.Label("Admin Görsel Linki")
+        @Html.TextBoxFor(x => x.AdminImage, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.AdminImage)
+        <br />
+        <button class="btn btn-success">Kaydet</button>
+    </div>
+}

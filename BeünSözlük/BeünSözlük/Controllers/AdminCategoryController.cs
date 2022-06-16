@@ -3,6 +3,7 @@ using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,9 @@ namespace BeünSözlük.Controllers
         CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
 
 
-        [Authorize(Roles = "A")]
-        public ActionResult Index()
+        public ActionResult Index(string search,int page = 1)
         {
-            var categoryValues=categoryManager.GetList();
+            var categoryValues = !string.IsNullOrEmpty(search) ? categoryManager.GetListBySearch(search).ToPagedList(page, 10) : categoryManager.GetList().ToPagedList(page, 11);
             return View(categoryValues);
         }
 
@@ -52,6 +52,7 @@ namespace BeünSözlük.Controllers
         public ActionResult DeleteCategory(int id)
         {
             var categoryValue= categoryManager.GetCategoryById(id);
+            categoryValue.CategoryStatus = categoryValue.CategoryStatus ? false : true;
             categoryManager.CategoryDelete(categoryValue);
             return RedirectToAction("Index"); 
         }

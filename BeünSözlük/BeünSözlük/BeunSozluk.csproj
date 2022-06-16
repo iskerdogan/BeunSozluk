@@ -138,6 +138,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AdminCategoryController.cs" />
+    <Compile Include="Controllers\AuthorizationController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
@@ -147,6 +148,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\WriterController.cs" />
     <Compile Include="Controllers\WriterPanelContentController.cs" />
@@ -155,6 +158,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CaptchaResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roles\AdminRoleProvider.cs" />
   </ItemGroup>
@@ -2426,10 +2430,17 @@
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\WriterPanel\AllHeading.cshtml" />
     <Content Include="Views\WriterPanelContent\AddContent.cshtml" />
+    <Content Include="Views\WriterPanel\ContentByHeading.cshtml" />
+    <Content Include="Views\Content\GetAllContent.cshtml" />
+    <Content Include="Views\Authorization\Index.cshtml" />
+    <Content Include="Views\Authorization\AddAdmin.cshtml" />
+    <Content Include="Views\Authorization\EditAdmin.cshtml" />
+    <Content Include="Views\WriterPanelContent\ContentByHeading.cshtml" />
+    <Content Include="Views\Register\WriterRegister.cshtml" />
+    <Content Include="Views\Profile\AdminProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

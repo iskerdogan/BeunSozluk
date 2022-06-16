@@ -1,0 +1,37 @@
+﻿@model EntityLayer.Concrete.Admin
+
+@{
+    ViewBag.Title = "AddAdmin";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Yeni Admin Ekle </h1>
+<br />
+@using (Html.BeginForm("AddAdmin", "Authorization", FormMethod.Post))
+{
+<div class="form-group">
+    @Html.HiddenFor(x => x.AdminImage)
+    @Html.Label("Admin Ad")
+    @Html.TextBoxFor(x => x.AdminName, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.AdminName)
+    <br />
+    @Html.Label("Admin Soyad")
+    @Html.TextBoxFor(x => x.AdminSurname, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.AdminSurname)
+    <br />
+    @Html.Label("Admin Mail")
+    @Html.TextBoxFor(x => x.AdminUserName, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.AdminUserName)
+    <br />
+    @Html.Label("Admin Şifre")
+    @Html.TextBoxFor(x => x.AdminPassword, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.AdminPassword)
+    <br />
+    @Html.Label("Admin Rol")
+    @Html.TextBoxFor(x => x.AdminRole, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.AdminRole)
+    <br />
+    <button class="btn btn-info">Kaydet</button>
+
+</div>
+}
+

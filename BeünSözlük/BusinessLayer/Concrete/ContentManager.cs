@@ -48,9 +48,19 @@ namespace BusinessLayer.Concrete
             return _contentDal.List(x => x.HeadingId == id);
         }
 
+        public List<Content> GetListBySearch(string search)
+        {
+            return _contentDal.List(x => x.ContentValue.Contains(search));
+        }
+
         public List<Content> GetListByWriter(int id)
         {
             return _contentDal.List(x => x.WriterId == id);
+        }
+
+        public List<Content> GetListByWriterAndSearch(string search, int id)
+        {
+            return _contentDal.List(x => x.WriterId == id && x.ContentValue.Contains(search));
         }
     }
 }

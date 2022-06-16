@@ -17,7 +17,7 @@ namespace BeünSözlük.Controllers
 
         public ActionResult Index()
         {
-            var contactValues = contactManager.GetList();
+            var contactValues = contactManager.GetList().OrderByDescending(x => x.ContactId).ToList();
             return View(contactValues);
         }
 

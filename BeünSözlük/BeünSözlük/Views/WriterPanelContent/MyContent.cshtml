@@ -1,5 +1,8 @@
 ﻿@using EntityLayer.Concrete
-@model List<Content>
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Content>
+
 @{
     ViewBag.Title = "MyContent";
     Layout = "~/Views/Shared/_WriterLayout.cshtml";
@@ -7,6 +10,21 @@
 <!DOCTYPE html>
 <html>
 <body class="hold-transition sidebar-mini">
+    <br />
+    @using (Html.BeginForm("MyContent", "WriterPanelContent", FormMethod.Post))
+    {
+        <form class="form-inline">
+            <div class="input-group ">
+                @Html.TextBox("search")
+                @*<input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">*@
+                <div class="input-group-append" style="padding-left:1px">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    }
     <br />
     <!-- Site wrapper -->
     <div class="wrapper">
@@ -29,7 +47,7 @@
                                 <div>
                                     <i class="fas fa-comment bg-yellow"></i>
                                     <div class="timeline-item">
-                                        <h3 class="timeline-header"><a href="#">@item.Heading.HeadingName</a></h3>
+                                        <h3 class="timeline-header"><a href="/WriterPanelContent/AddContent/@item.HeadingId">@item.Heading.HeadingName</a></h3>
                                         <div class="timeline-body">
                                             @item.ContentValue
                                         </div>
@@ -49,5 +67,5 @@
     <!-- ./wrapper -->
 </body>
 </html>
-
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("MyContent", new { page }), new PagedListRenderOptions { LiElementClasses = new List<string> { "page-link" } })
 

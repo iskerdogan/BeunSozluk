@@ -1,8 +1,29 @@
 ﻿@using EntityLayer.Concrete
-@model List<Category>
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Category>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    string caseByName = "";
+    string caseByColor = "";
+}
+<br />
+@using (Html.BeginForm("Index", "AdminCategory", FormMethod.Post))
+{
+    <form class="form-inline">
+        <div class="input-group ">
+            @Html.TextBox("search")
+            @*<input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">*@
+            <div class="input-group-append" style="padding-left:1px">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
 }
 <br />
 <table class="table table-bordered">
@@ -12,21 +33,33 @@
         <th>Kategori Açıklama</th>
         <th>Kategori Sil</th>
         <th>Kategori Güncelle</th>
-        <th>Kategori Başlıklar</th>
     </tr>
     @foreach (var item in Model)
     {
+        if (item.CategoryStatus == false)
+        {
+            caseByName = "Aktif Yap";
+            caseByColor = "btn-success";
+        }
+        if (item.CategoryStatus == true)
+        {
+            caseByName = "Pasif Yap";
+            caseByColor = "btn-danger";
+        }
         <tr>
             <th>@item.CategoryId</th>
             <td>@item.CategoryName </td>
             <td>@item.CategoryDescription</td>
-            <td><a href="/AdminCategory/DeleteCategory/@item.CategoryId" class="btn btn-danger">Sil</a></td>
+            <td><a href="/AdminCategory/DeleteCategory/@item.CategoryId" class="btn @caseByColor" id="btnDelete">@caseByName</a></td>
             <td><a href="/AdminCategory/EditCategory/@item.CategoryId" class="btn btn-warning">Güncelle</a></td>
-            <td><a href="#" class="btn btn-primary">Başlıklar</a></td>
-            
+
         </tr>
     }
 
 </table>
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions { LiElementClasses = new List<string> { "page-link" } })
 <a href="/AdminCategory/AddCategory" class="btn btn-info">Yeni Kategori Ekle</a>
+
+
+
 
